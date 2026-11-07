@@ -21,9 +21,11 @@ from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
 
 # ----------------------------------------------------------------- constants
-SIDEBAR, BG, CARD = "#17212b", "#f3f5f8", "#ffffff"
+SIDEBAR, BG, CARD = "#3b171c", "#f3f5f8", "#ffffff"
+SIDEBAR_HOVER, SIDEBAR_SURFACE = "#542127", "#542127"
+SIDEBAR_DIVIDER, SIDEBAR_TEXT = "#70464b", "#f3dfe1"
 ACCENT, ACCENT_DARK = "#b3262e", "#8f1d25"
-GREEN, RED, MUTED, TEXT = "#16805d", "#b3262e", "#64748b", "#17212b"
+GREEN, RED, MUTED, TEXT = "#16805d", "#b3262e", "#64748b", "#292021"
 BORDER, LIGHT_ACCENT, GOLD = "#e2e8f0", "#fff1f2", "#c5a66a"
 FONT = "Helvetica"
 LOGO_PATH = Path(__file__).resolve().parent / "resources" / "Central-Uni-logo.png"
@@ -870,16 +872,16 @@ class LoginFrame(tk.Frame):
     MAX_ATTEMPTS, LOCK_SECONDS = 3, 30
 
     def __init__(self, app):
-        super().__init__(app, bg="#0877bd")
+        super().__init__(app, bg=ACCENT_DARK)
         self.app, self.fails, self.locked_until = app, 0, 0.0
 
-        backdrop = tk.Canvas(self, bg="#0877bd", highlightthickness=0)
+        backdrop = tk.Canvas(self, bg=ACCENT_DARK, highlightthickness=0)
         backdrop.place(relwidth=1, relheight=1)
-        backdrop.create_oval(-110, 340, 220, 670, fill="#1288cc", outline="")
-        backdrop.create_oval(150, 300, 410, 560, fill="#1682c4", outline="")
-        backdrop.create_oval(700, -155, 1030, 175, fill="#1682c4", outline="")
+        backdrop.create_oval(-110, 340, 220, 670, fill="#c8444c", outline="")
+        backdrop.create_oval(150, 300, 410, 560, fill="#b3262e", outline="")
+        backdrop.create_oval(700, -155, 1030, 175, fill="#b3262e", outline="")
 
-        card = tk.Canvas(self, width=790, height=420, bg="#0877bd", highlightthickness=0)
+        card = tk.Canvas(self, width=790, height=420, bg=ACCENT_DARK, highlightthickness=0)
         card.place(relx=0.5, rely=0.5, anchor="center")
         radius = 20
         card.create_rectangle(radius, 0, 790 - radius, 420, fill=CARD, outline="")
@@ -887,23 +889,23 @@ class LoginFrame(tk.Frame):
         for x, y in ((0, 0), (790 - 2 * radius, 0),
                      (0, 420 - 2 * radius), (790 - 2 * radius, 420 - 2 * radius)):
             card.create_oval(x, y, x + 2 * radius, y + 2 * radius, fill=CARD, outline="")
-        card.create_rectangle(radius, 0, 325, 420, fill="#0877bd", outline="")
-        card.create_rectangle(0, radius, 325, 420 - radius, fill="#0877bd", outline="")
-        card.create_oval(0, 0, 2 * radius, 2 * radius, fill="#0877bd", outline="")
-        card.create_oval(0, 420 - 2 * radius, 2 * radius, 420, fill="#0877bd", outline="")
+        card.create_rectangle(radius, 0, 325, 420, fill=ACCENT_DARK, outline="")
+        card.create_rectangle(0, radius, 325, 420 - radius, fill=ACCENT_DARK, outline="")
+        card.create_oval(0, 0, 2 * radius, 2 * radius, fill=ACCENT_DARK, outline="")
+        card.create_oval(0, 420 - 2 * radius, 2 * radius, 420, fill=ACCENT_DARK, outline="")
 
-        brand = tk.Frame(card, bg="#0877bd", width=305, height=420)
+        brand = tk.Frame(card, bg=ACCENT_DARK, width=305, height=420)
         card.create_window(20, 0, anchor="nw", window=brand, width=305, height=420)
-        inner = tk.Frame(brand, bg="#0877bd")
+        inner = tk.Frame(brand, bg=ACCENT_DARK)
         inner.place(relx=0.5, rely=0.5, anchor="center")
-        tk.Label(inner, text="WELCOME", bg="#0877bd", fg="white",
+        tk.Label(inner, text="WELCOME", bg=ACCENT_DARK, fg="white",
                  font=(FONT, 19, "bold")).pack(anchor="center", pady=(0, 10))
-        tk.Label(inner, text="YOUR STUDENT PORTAL", bg="#0877bd", fg="#d7efff",
+        tk.Label(inner, text="YOUR STUDENT PORTAL", bg=ACCENT_DARK, fg="#ffe1e3",
                  font=(FONT, 9, "bold")).pack(anchor="center", pady=(0, 12))
-        tk.Label(inner, text="A clearer view of\nstudent progress.", bg="#0877bd", fg="white",
+        tk.Label(inner, text="A clearer view of\nstudent progress.", bg=ACCENT_DARK, fg="white",
                  font=(FONT, 21, "bold"), justify="center").pack(anchor="center")
-        tk.Label(inner, text="Student Management System", bg="#0877bd",
-                 fg="#d7efff", font=(FONT, 10)).pack(anchor="center", pady=(12, 0))
+        tk.Label(inner, text="Student Management System", bg=ACCENT_DARK,
+                 fg="#ffe1e3", font=(FONT, 10)).pack(anchor="center", pady=(12, 0))
 
         form = tk.Frame(card, bg=CARD, width=445, height=380)
         card.create_window(325, 20, anchor="nw", window=form, width=445, height=380)
@@ -932,7 +934,7 @@ class LoginFrame(tk.Frame):
         self.err = tk.Label(content, text="", bg=CARD, fg=RED, font=(FONT, 9),
                             wraplength=320, justify="left", anchor="w")
         self.err.pack(fill="x", pady=8)
-        self.btn = tk.Button(content, text="Sign in", bg="#0b4f82", activebackground="#083e68",
+        self.btn = tk.Button(content, text="Sign in", bg=ACCENT, activebackground=ACCENT_DARK,
                              fg="white", activeforeground="white", relief="flat", borderwidth=0,
                              cursor="hand2", font=(FONT, 10, "bold"), pady=9,
                              command=self.attempt)
@@ -987,16 +989,16 @@ class MainFrame(tk.Frame):
                                                                 pady=(22, 14))
         tk.Label(side, text="Central Track", bg=SIDEBAR, fg="white",
                  font=(FONT, 17, "bold")).pack(fill="x", padx=18)
-        tk.Label(side, text="STUDENT MANAGEMENT", bg=SIDEBAR, fg="#cbd5e1",
+        tk.Label(side, text="STUDENT MANAGEMENT", bg=SIDEBAR, fg=SIDEBAR_TEXT,
                  font=(FONT, 8, "bold")).pack(fill="x", padx=19, pady=(3, 22))
-        tk.Frame(side, bg="#344351", height=1).pack(fill="x", padx=18, pady=(0, 18))
+        tk.Frame(side, bg=SIDEBAR_DIVIDER, height=1).pack(fill="x", padx=18, pady=(0, 18))
 
         self.content = tk.Frame(self, bg=BG)
         self.content.pack(side="left", fill="both", expand=True)
 
         self.nav, self.pages = {}, {}
         for key, text, page_cls in self.NAV:
-            lbl = tk.Label(side, text=text, bg=SIDEBAR, fg="#d1d5f0", anchor="center",
+            lbl = tk.Label(side, text=text, bg=SIDEBAR, fg=SIDEBAR_TEXT, anchor="center",
                            font=(FONT, 10, "bold"), cursor="hand2", pady=11)
             lbl.pack(fill="x", padx=12, pady=3)
             lbl.bind("<Button-1>", lambda e, k=key: self.show(k))
@@ -1005,13 +1007,13 @@ class MainFrame(tk.Frame):
             self.nav[key] = lbl
             self.pages[key] = page_cls(self.content, app)
 
-        tk.Label(side, text=app.user.title(), bg="#263645", fg="white", anchor="center",
+        tk.Label(side, text=app.user.title(), bg=SIDEBAR_SURFACE, fg="white", anchor="center",
                  font=(FONT, 10, "bold"), pady=11).pack(side="bottom", fill="x", padx=12, pady=(0, 16))
-        out = tk.Label(side, text="Log out", bg=SIDEBAR, fg="#cbd5e1", anchor="center",
+        out = tk.Label(side, text="Log out", bg=SIDEBAR, fg=SIDEBAR_TEXT, anchor="center",
                        cursor="hand2", pady=8)
         out.pack(side="bottom", fill="x", padx=12, pady=(0, 8))
         out.bind("<Button-1>", lambda e: app.show_login())
-        out.bind("<Enter>", lambda e: out.config(bg="#263645"))
+        out.bind("<Enter>", lambda e: out.config(bg=SIDEBAR_HOVER))
         out.bind("<Leave>", lambda e: out.config(bg=SIDEBAR))
         self.show("dashboard")
 
@@ -1019,13 +1021,14 @@ class MainFrame(tk.Frame):
         self.active_page = key
         for k, page in self.pages.items():
             page.pack_forget()
-            self.nav[k].config(bg=ACCENT if k == key else SIDEBAR, fg="white" if k == key else "#d1d5f0")
+            self.nav[k].config(bg=ACCENT if k == key else SIDEBAR,
+                               fg="white" if k == key else SIDEBAR_TEXT)
         self.pages[key].pack(fill="both", expand=True)
         self.pages[key].refresh()
 
     def _hover_nav(self, key, entered):
         if key != getattr(self, "active_page", None):
-            self.nav[key].config(bg="#263645" if entered else SIDEBAR)
+            self.nav[key].config(bg=SIDEBAR_HOVER if entered else SIDEBAR)
 
 
 # --------------------------------------------------------------- startup screen
@@ -1043,12 +1046,12 @@ class StartupSplash(tk.Frame):
         tk.Label(content, text="Central Track", bg=SIDEBAR, fg="white",
                  font=(FONT, 27, "bold")).pack()
         tk.Label(content, text="STUDENT MANAGEMENT SYSTEM", bg=SIDEBAR,
-                 fg="#cbd5e1", font=(FONT, 9, "bold")).pack(pady=(4, 18))
+                 fg=SIDEBAR_TEXT, font=(FONT, 9, "bold")).pack(pady=(4, 18))
 
         self.progress = tk.Canvas(content, width=320, height=28, bg=SIDEBAR,
                                   highlightthickness=0)
         self.progress.pack()
-        self.progress.create_line(16, 14, 304, 14, fill="#344351", width=4)
+        self.progress.create_line(16, 14, 304, 14, fill=SIDEBAR_DIVIDER, width=4)
         self.bar = self.progress.create_line(16, 14, 16, 14, fill=ACCENT,
                                              width=4, capstyle=tk.ROUND)
         self.nodes = [
